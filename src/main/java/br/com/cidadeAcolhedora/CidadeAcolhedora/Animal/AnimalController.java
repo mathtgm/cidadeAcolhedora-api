@@ -83,6 +83,20 @@ public class AnimalController {
 		
 	}
 	
+	@RequestMapping("/tutor/{id_tutor}")
+	public List<Animal> findByIdTutor(@PathVariable Long id_tutor) {
+		
+		return animalService.findAnimalById_tutor(id_tutor);
+		
+	}
+	
+	@RequestMapping("/doador/{id_doador}")
+	public List<Animal> findById_doador(@PathVariable Long id_doador) {
+		
+		return animalService.findAnimalById_doador(id_doador);
+		
+	}
+	
 	// ###### Metodos POST ######
 	
 	@PostMapping(path = "/cadastrar/", consumes = MediaType.APPLICATION_JSON_VALUE)

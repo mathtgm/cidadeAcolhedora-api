@@ -80,7 +80,7 @@ public class AnimalService {
 	}
 	
 	// Lista os animais do doador
-	public List<Animal> findAnimalById_doador(int id_doador) {
+	public List<Animal> findAnimalById_doador(Long id_doador) {
 		
 		Optional<List<Animal>> optValue = animalRepository.findById_doador(id_doador);
 		
@@ -91,7 +91,7 @@ public class AnimalService {
 	}
 	
 	// Lista os animais do tutor
-	public List<Animal> findAnimalById_tutor(int id_tutor) {
+	public List<Animal> findAnimalById_tutor(Long id_tutor) {
 		
 		Optional<List<Animal>> optValue = animalRepository.findById_tutor(id_tutor);
 		
