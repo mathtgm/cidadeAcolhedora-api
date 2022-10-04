@@ -8,18 +8,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import br.com.cidadeAcolhedora.CidadeAcolhedora.Animal.Animal;
+import br.com.cidadeAcolhedora.CidadeAcolhedora.localizacao.Cidade;
+import br.com.cidadeAcolhedora.CidadeAcolhedora.localizacao.Estado;
 
 @Entity
 public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_usuario;
+	private Long id_usuario;
 	
 	@Column(length = 120, nullable = false)
 	private String nome;
@@ -30,19 +37,25 @@ public class Usuario {
 	@Column(length = 15, nullable = false)
 	private String telefone;
 	
-	@Column(length = 15, nullable = false)
-	private String cidade;
+	@Column(length = 9, nullable = false)
+	private char genero;
 	
-	@Column(length = 15, nullable = false)
-	private String estado;
-	
-	@JsonIgnore
 	@Column(length = 20, nullable = false)
 	private String usuario;
 	
-	@JsonIgnore
 	@Column(length = 16, nullable = false)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne
+	@JoinColumn(name = "id_cidade")
+	private Cidade cidade;
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne
+	@JoinColumn(name = "id_estado")
+	private Estado estado;
 	
 	@JsonIgnore
 	@OneToMany(targetEntity = Animal.class, mappedBy = "idTutor")
@@ -54,26 +67,11 @@ public class Usuario {
 
 	public Usuario() {}
 
-	public Usuario(int id_usuario, String nome, String documento, String telefone, String cidade, String estado,
-			String usuario, String senha, List<Animal> listaAnimaisTutelados, List<Animal> listaAnimaisAdocao) {
-		super();
-		this.id_usuario = id_usuario;
-		this.nome = nome;
-		this.documento = documento;
-		this.telefone = telefone;
-		this.cidade = cidade;
-		this.estado = estado;
-		this.usuario = usuario;
-		this.senha = senha;
-		this.listaAnimaisTutelados = listaAnimaisTutelados;
-		this.listaAnimaisAdocao = listaAnimaisAdocao;
-	}
-
-	public int getId_usuario() {
+	public Long getId_usuario() {
 		return id_usuario;
 	}
 
-	public void setId_usuario(int id_usuario) {
+	public void setId_usuario(Long id_usuario) {
 		this.id_usuario = id_usuario;
 	}
 
@@ -101,22 +99,6 @@ public class Usuario {
 		this.telefone = telefone;
 	}
 
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	public String getUsuario() {
 		return usuario;
 	}
@@ -124,7 +106,7 @@ public class Usuario {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
+	
 	public String getSenha() {
 		return senha;
 	}
@@ -149,10 +131,34 @@ public class Usuario {
 		this.listaAnimaisAdocao = listaAnimaisAdocao;
 	}
 
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cidade, documento, estado, id_usuario, listaAnimaisAdocao, listaAnimaisTutelados, nome,
-				senha, telefone, usuario);
+		return Objects.hash(cidade, documento, estado, genero, id_usuario, listaAnimaisAdocao, listaAnimaisTutelados,
+				nome, senha, telefone, usuario);
+	}
+
+	public char getGenero() {
+		return genero;
+	}
+
+	public void setGenero(char genero) {
+		this.genero = genero;
 	}
 
 	@Override
@@ -165,8 +171,8 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(cidade, other.cidade) && Objects.equals(documento, other.documento)
-				&& Objects.equals(estado, other.estado) && id_usuario == other.id_usuario
-				&& Objects.equals(listaAnimaisAdocao, other.listaAnimaisAdocao)
+				&& Objects.equals(estado, other.estado) && Objects.equals(genero, other.genero)
+				&& id_usuario == other.id_usuario && Objects.equals(listaAnimaisAdocao, other.listaAnimaisAdocao)
 				&& Objects.equals(listaAnimaisTutelados, other.listaAnimaisTutelados)
 				&& Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha)
 				&& Objects.equals(telefone, other.telefone) && Objects.equals(usuario, other.usuario);
@@ -175,9 +181,9 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id_usuario=" + id_usuario + ", nome=" + nome + ", documento=" + documento + ", telefone="
-				+ telefone + ", cidade=" + cidade + ", estado=" + estado + ", usuario=" + usuario + ", senha=" + senha
-				+ ", listaAnimaisTutelados=" + listaAnimaisTutelados + ", listaAnimaisAdocao=" + listaAnimaisAdocao
-				+ "]";
+				+ telefone + ", genero=" + genero + ", cidade=" + cidade + ", estado=" + estado + ", usuario=" + usuario
+				+ ", senha=" + senha + ", listaAnimaisTutelados=" + listaAnimaisTutelados + ", listaAnimaisAdocao="
+				+ listaAnimaisAdocao + "]";
 	}
 
 }
