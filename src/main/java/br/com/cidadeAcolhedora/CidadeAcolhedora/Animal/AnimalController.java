@@ -2,6 +2,7 @@ package br.com.cidadeAcolhedora.CidadeAcolhedora.Animal;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -121,10 +122,25 @@ public class AnimalController {
 	public ResponseEntity<ResponseDefault> deleteAnimal(@PathVariable Long id_animal) {
 		
 		ResponseDefault res = new ResponseDefault();
-		res.setStatusCode(HttpStatus.OK);
-		res.setMessage("Animal com a ID: " + id_animal + " removido com sucesso!");
 		
-		return ResponseEntity.status(HttpStatus.OK).body(res);
+		try {
+			
+			animalService.deleteAnimal(id_animal);
+			
+			res.setStatusCode(HttpStatus.OK);
+			res.setMessage("Animal com a ID: " + id_animal + " removido com sucesso!");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+			
+		} catch (EmptyResultDataAccessException err) {
+			
+			res.setMessage("Id(" + id_animal + ") do animal não encontrado");
+			res.setStatusCode(HttpStatus.NOT_FOUND);
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+			
+		}
+		
 		
 	}
 
