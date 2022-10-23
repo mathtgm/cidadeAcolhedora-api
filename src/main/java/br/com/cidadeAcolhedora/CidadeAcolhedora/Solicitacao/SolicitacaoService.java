@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.cidadeAcolhedora.CidadeAcolhedora.Animal.Animal;
+import br.com.cidadeAcolhedora.CidadeAcolhedora.Usuario.Usuario;
+
 @Service
 public class SolicitacaoService {
 	
@@ -15,7 +18,11 @@ public class SolicitacaoService {
 	// Encontrar todas as solicitacoes do Animal
 	public List<Solicitacao> findByIdAnimal(Long id_animal) {
 		
-		List<Solicitacao> listSolicitacao = solicitacaoRepository.findByIdAnimal(id_animal);
+		System.out.println("Cheguei no Service " + id_animal );
+		
+		Animal animal = new Animal();
+		animal.setId_animal(id_animal);
+		List<Solicitacao> listSolicitacao = solicitacaoRepository.findById_Animal(animal);
 		
 		return listSolicitacao;
 		
@@ -24,7 +31,9 @@ public class SolicitacaoService {
 	// Encontrar todas as solicitacoes do adotante
 	public List<Solicitacao> findByIdAdotante(Long id_adotante) {
 		
-		List<Solicitacao> listSolicitacao = solicitacaoRepository.findByIdAdotante(id_adotante);
+		Usuario user = new Usuario();
+		user.setId_usuario(id_adotante);
+		List<Solicitacao> listSolicitacao = solicitacaoRepository.findById_Adotante(user);
 		
 		return listSolicitacao;
 		

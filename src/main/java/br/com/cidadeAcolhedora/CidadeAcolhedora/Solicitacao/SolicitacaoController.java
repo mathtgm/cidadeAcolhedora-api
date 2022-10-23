@@ -16,7 +16,7 @@ public class SolicitacaoController {
 	public SolicitacaoService solicitacaoService;
 	
 	@RequestMapping("/{id}")
-	public Solicitacao findById(@PathVariable("id") Long id) {
+	public Solicitacao findById(@PathVariable Long id) {
 		
 		return solicitacaoService.findById(id);
 	}
@@ -31,6 +31,7 @@ public class SolicitacaoController {
 	@RequestMapping("/animal/{id_animal}")
 	public List<Solicitacao> findByIdAnimal(@PathVariable Long id_animal) {
 		
+		System.out.println("Cheguei no Controller " + id_animal );
 		return solicitacaoService.findByIdAnimal(id_animal);
 		
 	}
