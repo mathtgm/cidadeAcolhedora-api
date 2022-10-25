@@ -17,9 +17,7 @@ public class SolicitacaoService {
 	
 	// Encontrar todas as solicitacoes do Animal
 	public List<Solicitacao> findByIdAnimal(Long id_animal) {
-		
-		System.out.println("Cheguei no Service " + id_animal );
-		
+
 		Animal animal = new Animal();
 		animal.setId_animal(id_animal);
 		List<Solicitacao> listSolicitacao = solicitacaoRepository.findById_Animal(animal);
@@ -46,6 +44,28 @@ public class SolicitacaoService {
 		
 		return solicitacao.get();
 		
+	}
+	
+	// Encontra as 5 ultimas solicitacoes do Animal
+	public List<Solicitacao> findByIdAnimalLimite(Long id_animal) {
+
+		Animal animal = new Animal();
+		animal.setId_animal(id_animal);
+		List<Solicitacao> listSolicitacao = solicitacaoRepository.findById_AnimalLimite(animal);
+			
+		return listSolicitacao;
+			
+	}
+
+	// Encontra as 5 ultimas solicitacoes do Adotante
+	public List<Solicitacao> findByIdAdotanteLimite(Long id_adotante) {
+
+		Usuario usuario = new Usuario();
+		usuario.setId_usuario(id_adotante);
+		List<Solicitacao> listSolicitacao = solicitacaoRepository.findById_AdotanteLimite(usuario);
+				
+		return listSolicitacao;
+				
 	}
 	
 	

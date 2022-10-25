@@ -28,11 +28,24 @@ public class SolicitacaoController {
 		
 	}
 	
+	@RequestMapping("/adotante/limite/{id_adotante}")
+	public List<Solicitacao> findByIdAdotanteLimite(@PathVariable Long id_adotante) {
+		
+		return solicitacaoService.findByIdAdotanteLimite(id_adotante);
+		
+	}
+	
 	@RequestMapping("/animal/{id_animal}")
 	public List<Solicitacao> findByIdAnimal(@PathVariable Long id_animal) {
 		
-		System.out.println("Cheguei no Controller " + id_animal );
 		return solicitacaoService.findByIdAnimal(id_animal);
+		
+	}
+	
+	@RequestMapping("/animal/limite/{id_animal}")
+	public List<Solicitacao> findByIdAnimalLimite(@PathVariable Long id_animal) {
+		
+		return solicitacaoService.findByIdAnimalLimite(id_animal);
 		
 	}
 }

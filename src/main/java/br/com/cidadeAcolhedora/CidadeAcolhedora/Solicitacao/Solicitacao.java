@@ -31,6 +31,12 @@ public class Solicitacao {
 	
 	private LocalDateTime data_solicitacao;
 	private String descricao;
+	
+	
+//	A = Aberto
+//	B = Em Analise
+//	C = Recusado
+//	D = Aprovado
 	private char situacao;
 	
 	public Solicitacao() {
