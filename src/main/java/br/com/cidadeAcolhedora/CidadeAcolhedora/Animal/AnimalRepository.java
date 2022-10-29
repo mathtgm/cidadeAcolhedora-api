@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface AnimalRepository extends CrudRepository<Animal, Long>{
 	
-	@Query("FROM Animal WHERE nome LIKE %:nome%")
-	public Optional<List<Animal>> findByNome(@Param("nome") String nome);
+	@Query("FROM Animal WHERE id_doador = :id_doador AND nome LIKE %:nome%")
+	public Optional<List<Animal>> findByNome(@Param("nome") String nome, @Param("id_doador") Long id_doador);
 	
 	public Optional<List<Animal>> findByTipo(String tipo);
 	

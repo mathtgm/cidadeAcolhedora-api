@@ -42,10 +42,10 @@ public class AnimalController {
 	
 	// ###### Metodos GET ######
 	
-	@RequestMapping("/nome/{nome}")
-	public List<Animal> findByName(@PathVariable String nome) {		
+	@RequestMapping("/nome/{id_doador}/{nome}")
+	public List<Animal> findByName(@PathVariable String nome, @PathVariable Long id_doador) {		
 		
-		return animalService.findByNome(nome);
+		return animalService.findByNome(nome, id_doador);
 	
 	}
 	

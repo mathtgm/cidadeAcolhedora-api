@@ -16,13 +16,13 @@ public class AnimalService {
 	
 	
 	// Procura animais pelo nome
-	public List<Animal> findByNome(String nome) {
-		Optional<List<Animal>> optValue = animalRepository.findByNome(nome);
+	public List<Animal> findByNome(String nome, Long id_doador) {
+		Optional<List<Animal>> optValue = animalRepository.findByNome(nome, id_doador);
 		
 		optValue.orElseThrow(() -> new AnimalNotFound("nome", nome));
 		
 		
-		return animalRepository.findByNome(nome).get();
+		return optValue.get();
 	}
 	
 	// Procura animais pelo ID
