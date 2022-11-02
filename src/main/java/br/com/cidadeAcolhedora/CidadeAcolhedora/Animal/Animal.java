@@ -40,6 +40,21 @@ public class Animal implements Serializable {
 	@Column(length = 80, nullable = false)
 	private String cor;
 	
+	@Column(nullable = false)
+	private int idade;
+	
+	@Column(nullable = false)
+	private String sexo;
+	
+	@Column(nullable = false)
+	private int nivelCarinho;
+	
+	@Column(nullable = false)
+	private int nivelSociavel;
+	
+	@Column(nullable = false)
+	private int nivelBrincalhao;
+	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_cidade")
@@ -62,15 +77,20 @@ public class Animal implements Serializable {
 	@JoinColumn(name = "id_imagem")
 	private List<AnimalImagem> id_imagem;
 	
-	public Animal() {}
-
-	public Animal(Long id_animal, String nome, String tipo, String cor, Cidade idCidade, Estado idEstado,
-			Usuario idTutor, Usuario idDoador, List<AnimalImagem> id_imagem) {
-		super();
+	public Animal() {}	
+	
+	public Animal(Long id_animal, String nome, String tipo, String cor, int idade, String sexo, int nivelCarinho,
+			int nivelSociavel, int nivelBrincalhao, Cidade idCidade, Estado idEstado, Usuario idTutor, Usuario idDoador,
+			List<AnimalImagem> id_imagem) {
 		this.id_animal = id_animal;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.cor = cor;
+		this.idade = idade;
+		this.sexo = sexo;
+		this.nivelCarinho = nivelCarinho;
+		this.nivelSociavel = nivelSociavel;
+		this.nivelBrincalhao = nivelBrincalhao;
 		this.idCidade = idCidade;
 		this.idEstado = idEstado;
 		this.idTutor = idTutor;
@@ -156,9 +176,50 @@ public class Animal implements Serializable {
 		this.id_imagem = id_imagem;
 	}
 
+	public int getIdade() {
+		return idade;
+	}
+
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public int getNivelCarinho() {
+		return nivelCarinho;
+	}
+
+	public void setNivelCarinho(int nivelCarinho) {
+		this.nivelCarinho = nivelCarinho;
+	}
+
+	public int getNivelSociavel() {
+		return nivelSociavel;
+	}
+
+	public void setNivelSociavel(int nivelSociavel) {
+		this.nivelSociavel = nivelSociavel;
+	}
+
+	public int getNivelBrincalhao() {
+		return nivelBrincalhao;
+	}
+
+	public void setNivelBrincalhao(int nivelBrincalhao) {
+		this.nivelBrincalhao = nivelBrincalhao;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cor, idCidade, idDoador, idEstado, idTutor, id_animal, id_imagem, nome, tipo);
+		return Objects.hash(cor, idCidade, idDoador, idEstado, idTutor, id_animal, id_imagem, idade, nivelBrincalhao,
+				nivelCarinho, nivelSociavel, nome, sexo, tipo);
 	}
 
 	@Override
@@ -173,15 +234,18 @@ public class Animal implements Serializable {
 		return Objects.equals(cor, other.cor) && Objects.equals(idCidade, other.idCidade)
 				&& Objects.equals(idDoador, other.idDoador) && Objects.equals(idEstado, other.idEstado)
 				&& Objects.equals(idTutor, other.idTutor) && Objects.equals(id_animal, other.id_animal)
-				&& Objects.equals(id_imagem, other.id_imagem) && Objects.equals(nome, other.nome)
-				&& Objects.equals(tipo, other.tipo);
+				&& Objects.equals(id_imagem, other.id_imagem) && idade == other.idade
+				&& nivelBrincalhao == other.nivelBrincalhao && nivelCarinho == other.nivelCarinho
+				&& nivelSociavel == other.nivelSociavel && Objects.equals(nome, other.nome)
+				&& Objects.equals(sexo, other.sexo) && Objects.equals(tipo, other.tipo);
 	}
 
 	@Override
 	public String toString() {
-		return "Animal [id_animal=" + id_animal + ", nome=" + nome + ", tipo=" + tipo + ", cor=" + cor + ", idCidade="
-				+ idCidade + ", idEstado=" + idEstado + ", idTutor=" + idTutor + ", idDoador=" + idDoador
-				+ ", id_imagem=" + id_imagem + "]";
+		return "Animal [id_animal=" + id_animal + ", nome=" + nome + ", tipo=" + tipo + ", cor=" + cor + ", idade="
+				+ idade + ", sexo=" + sexo + ", nivelCarinho=" + nivelCarinho + ", nivelSociavel=" + nivelSociavel
+				+ ", nivelBrincalhao=" + nivelBrincalhao + ", idCidade=" + idCidade + ", idEstado=" + idEstado
+				+ ", idTutor=" + idTutor + ", idDoador=" + idDoador + ", id_imagem=" + id_imagem + "]";
 	}
 			
 }
