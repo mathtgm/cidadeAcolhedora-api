@@ -55,6 +55,9 @@ public class Animal implements Serializable {
 	@Column(nullable = false)
 	private int nivelBrincalhao;
 	
+	@Column(nullable = false)
+	private String descricao;
+	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_cidade")
@@ -77,11 +80,11 @@ public class Animal implements Serializable {
 	@JoinColumn(name = "id_imagem")
 	private List<AnimalImagem> id_imagem;
 	
-	public Animal() {}	
-	
+	public Animal() {}		
+
 	public Animal(Long id_animal, String nome, String tipo, String cor, int idade, String sexo, int nivelCarinho,
-			int nivelSociavel, int nivelBrincalhao, Cidade idCidade, Estado idEstado, Usuario idTutor, Usuario idDoador,
-			List<AnimalImagem> id_imagem) {
+			int nivelSociavel, int nivelBrincalhao, String descricao, Cidade idCidade, Estado idEstado, Usuario idTutor,
+			Usuario idDoador, List<AnimalImagem> id_imagem) {
 		this.id_animal = id_animal;
 		this.nome = nome;
 		this.tipo = tipo;
@@ -91,14 +94,13 @@ public class Animal implements Serializable {
 		this.nivelCarinho = nivelCarinho;
 		this.nivelSociavel = nivelSociavel;
 		this.nivelBrincalhao = nivelBrincalhao;
+		this.descricao = descricao;
 		this.idCidade = idCidade;
 		this.idEstado = idEstado;
 		this.idTutor = idTutor;
 		this.idDoador = idDoador;
 		this.id_imagem = id_imagem;
 	}
-
-
 
 	public Long getId_animal() {
 		return id_animal;
@@ -216,10 +218,27 @@ public class Animal implements Serializable {
 		this.nivelBrincalhao = nivelBrincalhao;
 	}
 
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	@Override
+	public String toString() {
+		return "Animal [id_animal=" + id_animal + ", nome=" + nome + ", tipo=" + tipo + ", cor=" + cor + ", idade="
+				+ idade + ", sexo=" + sexo + ", nivelCarinho=" + nivelCarinho + ", nivelSociavel=" + nivelSociavel
+				+ ", nivelBrincalhao=" + nivelBrincalhao + ", descricao=" + descricao + ", idCidade=" + idCidade
+				+ ", idEstado=" + idEstado + ", idTutor=" + idTutor + ", idDoador=" + idDoador + ", id_imagem="
+				+ id_imagem + "]";
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cor, idCidade, idDoador, idEstado, idTutor, id_animal, id_imagem, idade, nivelBrincalhao,
-				nivelCarinho, nivelSociavel, nome, sexo, tipo);
+		return Objects.hash(cor, descricao, idCidade, idDoador, idEstado, idTutor, id_animal, id_imagem, idade,
+				nivelBrincalhao, nivelCarinho, nivelSociavel, nome, sexo, tipo);
 	}
 
 	@Override
@@ -231,21 +250,14 @@ public class Animal implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Animal other = (Animal) obj;
-		return Objects.equals(cor, other.cor) && Objects.equals(idCidade, other.idCidade)
-				&& Objects.equals(idDoador, other.idDoador) && Objects.equals(idEstado, other.idEstado)
-				&& Objects.equals(idTutor, other.idTutor) && Objects.equals(id_animal, other.id_animal)
-				&& Objects.equals(id_imagem, other.id_imagem) && idade == other.idade
-				&& nivelBrincalhao == other.nivelBrincalhao && nivelCarinho == other.nivelCarinho
-				&& nivelSociavel == other.nivelSociavel && Objects.equals(nome, other.nome)
-				&& Objects.equals(sexo, other.sexo) && Objects.equals(tipo, other.tipo);
-	}
-
-	@Override
-	public String toString() {
-		return "Animal [id_animal=" + id_animal + ", nome=" + nome + ", tipo=" + tipo + ", cor=" + cor + ", idade="
-				+ idade + ", sexo=" + sexo + ", nivelCarinho=" + nivelCarinho + ", nivelSociavel=" + nivelSociavel
-				+ ", nivelBrincalhao=" + nivelBrincalhao + ", idCidade=" + idCidade + ", idEstado=" + idEstado
-				+ ", idTutor=" + idTutor + ", idDoador=" + idDoador + ", id_imagem=" + id_imagem + "]";
+		return Objects.equals(cor, other.cor) && Objects.equals(descricao, other.descricao)
+				&& Objects.equals(idCidade, other.idCidade) && Objects.equals(idDoador, other.idDoador)
+				&& Objects.equals(idEstado, other.idEstado) && Objects.equals(idTutor, other.idTutor)
+				&& Objects.equals(id_animal, other.id_animal) && Objects.equals(id_imagem, other.id_imagem)
+				&& idade == other.idade && nivelBrincalhao == other.nivelBrincalhao
+				&& nivelCarinho == other.nivelCarinho && nivelSociavel == other.nivelSociavel
+				&& Objects.equals(nome, other.nome) && Objects.equals(sexo, other.sexo)
+				&& Objects.equals(tipo, other.tipo);
 	}
 			
 }
