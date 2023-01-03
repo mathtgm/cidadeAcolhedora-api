@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.cidadeAcolhedora.CidadeAcolhedora.Animal.Imagem.AnimalImagem;
+import br.com.cidadeAcolhedora.CidadeAcolhedora.Solicitacao.Solicitacao;
 import br.com.cidadeAcolhedora.CidadeAcolhedora.Usuario.Usuario;
 import br.com.cidadeAcolhedora.CidadeAcolhedora.localizacao.Cidade;
 import br.com.cidadeAcolhedora.CidadeAcolhedora.localizacao.Estado;
@@ -28,7 +30,7 @@ public class Animal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_animal;
 	
 	@Column(length = 50)
@@ -68,23 +70,27 @@ public class Animal implements Serializable {
 	@JoinColumn(name = "id_estado")
 	private Estado idEstado;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(name = "id_tutor")
 	private Usuario idTutor;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(name = "id_doador")
 	private Usuario idDoador;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_imagem")
-	private List<AnimalImagem> id_imagem;
+	@OneToMany(mappedBy = "id_animal", cascade = CascadeType.REMOVE)
+	private List<AnimalImagem> imagem;
 	
-	public Animal() {}		
+	@OneToMany(mappedBy = "id_animal", cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	private List<Solicitacao> solicitacoes;
 
+	public Animal() {}
+	
 	public Animal(Long id_animal, String nome, String tipo, String cor, int idade, String sexo, int nivelCarinho,
 			int nivelSociavel, int nivelBrincalhao, String descricao, Cidade idCidade, Estado idEstado, Usuario idTutor,
-			Usuario idDoador, List<AnimalImagem> id_imagem) {
+			Usuario idDoador, List<AnimalImagem> imagem) {
+		super();
 		this.id_animal = id_animal;
 		this.nome = nome;
 		this.tipo = tipo;
@@ -99,8 +105,10 @@ public class Animal implements Serializable {
 		this.idEstado = idEstado;
 		this.idTutor = idTutor;
 		this.idDoador = idDoador;
-		this.id_imagem = id_imagem;
+		this.imagem = imagem;
 	}
+
+
 
 	public Long getId_animal() {
 		return id_animal;
@@ -170,14 +178,6 @@ public class Animal implements Serializable {
 		return serialVersionUID;
 	}
 
-	public List<AnimalImagem> getId_imagem() {
-		return id_imagem;
-	}
-
-	public void setId_imagem(List<AnimalImagem> id_imagem) {
-		this.id_imagem = id_imagem;
-	}
-
 	public int getIdade() {
 		return idade;
 	}
@@ -226,18 +226,26 @@ public class Animal implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public List<AnimalImagem> getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(List<AnimalImagem> imagem) {
+		this.imagem = imagem;
+	}
+
 	@Override
 	public String toString() {
 		return "Animal [id_animal=" + id_animal + ", nome=" + nome + ", tipo=" + tipo + ", cor=" + cor + ", idade="
 				+ idade + ", sexo=" + sexo + ", nivelCarinho=" + nivelCarinho + ", nivelSociavel=" + nivelSociavel
 				+ ", nivelBrincalhao=" + nivelBrincalhao + ", descricao=" + descricao + ", idCidade=" + idCidade
 				+ ", idEstado=" + idEstado + ", idTutor=" + idTutor + ", idDoador=" + idDoador + ", id_imagem="
-				+ id_imagem + "]";
+				+ imagem + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cor, descricao, idCidade, idDoador, idEstado, idTutor, id_animal, id_imagem, idade,
+		return Objects.hash(cor, descricao, idCidade, idDoador, idEstado, idTutor, id_animal, imagem, idade,
 				nivelBrincalhao, nivelCarinho, nivelSociavel, nome, sexo, tipo);
 	}
 
@@ -253,7 +261,7 @@ public class Animal implements Serializable {
 		return Objects.equals(cor, other.cor) && Objects.equals(descricao, other.descricao)
 				&& Objects.equals(idCidade, other.idCidade) && Objects.equals(idDoador, other.idDoador)
 				&& Objects.equals(idEstado, other.idEstado) && Objects.equals(idTutor, other.idTutor)
-				&& Objects.equals(id_animal, other.id_animal) && Objects.equals(id_imagem, other.id_imagem)
+				&& Objects.equals(id_animal, other.id_animal) && Objects.equals(imagem, other.imagem)
 				&& idade == other.idade && nivelBrincalhao == other.nivelBrincalhao
 				&& nivelCarinho == other.nivelCarinho && nivelSociavel == other.nivelSociavel
 				&& Objects.equals(nome, other.nome) && Objects.equals(sexo, other.sexo)

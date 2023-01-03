@@ -1,7 +1,11 @@
 package br.com.cidadeAcolhedora.CidadeAcolhedora.Animal;
 
 import java.util.List;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,9 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cidadeAcolhedora.CidadeAcolhedora.ResponseDefault.ResponseDefault;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/animal")
@@ -22,24 +25,7 @@ public class AnimalController {
 	
 	@Autowired
 	private AnimalService animalService;
-	
-	/*
-	 * private final String pathArquivos;
-	 * 
-	 * public AnimalController(@Value("${app.path.imagens}") String pathArquivos) {
-	 * this.pathArquivos = pathArquivos; }
-	 * 
-	 * @PostMapping("/imagem") public ResponseEntity<String>
-	 * salvarImagem(@RequestParam("image") MultipartFile image){ String formato =
-	 * FilenameUtils.getExtension(image.getOriginalFilename()); String novoCaminho =
-	 * pathArquivos + UUID.randomUUID() + formato;
-	 * 
-	 * try { Files.copy(image.getInputStream(), Path.of(novoCaminho),
-	 * StandardCopyOption.REPLACE_EXISTING); return new
-	 * ResponseEntity<String>(HttpStatus.OK); } catch (Exception e) { return new
-	 * ResponseEntity<String>(HttpStatus.SEE_OTHER); } }
-	 */
-	
+		
 	// ###### Metodos GET ######
 	
 	@RequestMapping("/nome/{id_doador}/{nome}")
@@ -49,7 +35,7 @@ public class AnimalController {
 	
 	}
 	
-	@RequestMapping("/{id}")
+	@RequestMapping("/id/{id}")
 	public Animal findById(@PathVariable Long id) {
 		
 		return animalService.findById(id);
@@ -101,9 +87,9 @@ public class AnimalController {
 	// ###### Metodos POST ######
 	
 	@PostMapping(path = "/cadastrar/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Animal saveAnimal(@RequestBody Animal animal) {
-		
-		return animalService.saveAnimal(animal);
+	public ResponseEntity<Animal> saveAnimal(@RequestBody Animal animal) {
+
+		return ResponseEntity.ok().body(animalService.saveAnimal(animal));
 		
 	}
 	
@@ -119,25 +105,18 @@ public class AnimalController {
 	// ###### Metodo DELETE ######
 	
 	@DeleteMapping("/remover/{id_animal}")
-	public ResponseEntity<ResponseDefault> deleteAnimal(@PathVariable Long id_animal) {
-		
-		ResponseDefault res = new ResponseDefault();
+	public ResponseEntity<Animal> deleteAnimal(@PathVariable Long id_animal) {
 		
 		try {
 			
+			Animal animal = animalService.findById(id_animal);
 			animalService.deleteAnimal(id_animal);
 			
-			res.setStatusCode(HttpStatus.OK);
-			res.setMessage("Animal com a ID: " + id_animal + " removido com sucesso!");
-			
-			return ResponseEntity.status(HttpStatus.OK).body(res);
+			return ResponseEntity.ok().body(animal);
 			
 		} catch (EmptyResultDataAccessException err) {
 			
-			res.setMessage("Id(" + id_animal + ") do animal não encontrado");
-			res.setStatusCode(HttpStatus.NOT_FOUND);
-			
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Animal());
 			
 		}
 		

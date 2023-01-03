@@ -17,30 +17,30 @@ import br.com.cidadeAcolhedora.CidadeAcolhedora.Animal.Animal;
 public class AnimalImagem {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id_imagem;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_imagem;
 	
 	private String imagePath;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_animal")
 	@JsonIgnore
+	@JoinColumn(name = "id_animal")
 	private Animal id_animal;
 	
 	public AnimalImagem() {}
 
-	public AnimalImagem(Integer id_imagem, String imagePath, Animal id_animal) {
+	public AnimalImagem(Long id_imagem, String imagePath, Animal id_animal) {
 		super();
 		this.id_imagem = id_imagem;
 		this.imagePath = imagePath;
 		this.id_animal = id_animal;
 	}
 
-	public Integer getId_imagem() {
+	public Long getId_imagem() {
 		return id_imagem;
 	}
 
-	public void setId_imagem(Integer id_imagem) {
+	public void setId_imagem(Long id_imagem) {
 		this.id_imagem = id_imagem;
 	}
 

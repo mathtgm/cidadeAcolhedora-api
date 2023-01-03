@@ -12,8 +12,7 @@ import br.com.cidadeAcolhedora.CidadeAcolhedora.Animal.Error.AnimalNotFound;
 public class AnimalService {
 	
 	@Autowired
-	private AnimalRepository animalRepository;
-	
+	private AnimalRepository animalRepository;	
 	
 	// Procura animais pelo nome
 	public List<Animal> findByNome(String nome, Long id_doador) {

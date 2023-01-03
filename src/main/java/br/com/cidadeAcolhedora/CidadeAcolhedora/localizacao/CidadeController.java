@@ -29,4 +29,11 @@ public class CidadeController {
 		return ResponseEntity.ok(cidadeService.getCidadeByEstadoId(id_estado));
 		
 	}
+	
+	@RequestMapping("/id/{id_cidade}")
+	public ResponseEntity<Cidade> findCidadeById(@PathVariable Long id_cidade) {
+		
+		return ResponseEntity.ok(cidadeService.getCidadeById(id_cidade));
+		
+	}
 }

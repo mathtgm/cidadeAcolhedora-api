@@ -23,4 +23,9 @@ public class CidadeService {
 		return cidadeRepository.findEstadoById(id_estado);
 	}
 	
+	public Cidade getCidadeById(Long id_cidade) {
+		
+		return cidadeRepository.findById(id_cidade).get();
+		
+	}
 }

@@ -53,5 +53,19 @@ public class UsuarioService {
 		usuarioRepository.deleteById(id_usuario);
 		
 	}
+
+	public Usuario atualizarUsuario(Usuario usuario) {
+
+		Usuario usuarioTemp = usuarioRepository.findById(usuario.getId_usuario()).get();
+		
+		usuarioTemp.setCidade(usuario.getCidade());
+		usuarioTemp.setEstado(usuario.getEstado());
+		usuarioTemp.setDocumento(usuario.getDocumento());
+		usuarioTemp.setGenero(usuario.getGenero());
+		usuarioTemp.setNome(usuario.getNome());
+		usuarioTemp.setTelefone(usuario.getTelefone());
+		
+		return usuarioRepository.save(usuarioTemp);
+	}
 	
 }

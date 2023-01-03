@@ -28,22 +28,22 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_usuario;
 	
-	@Column(length = 120, nullable = false)
+	@Column(length = 120)
 	private String nome;
 	
-	@Column(length = 15, nullable = false)
+	@Column(length = 15)
 	private String documento;
 	
-	@Column(length = 15, nullable = false)
+	@Column(length = 15)
 	private String telefone;
 	
-	@Column(length = 9, nullable = false)
+	@Column(length = 9)
 	private char genero;
 	
-	@Column(length = 20, nullable = false)
+	@Column(length = 20)
 	private String usuario;
 	
-	@Column(length = 16, nullable = false)
+	@Column(length = 16)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
 	

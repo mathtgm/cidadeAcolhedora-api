@@ -23,4 +23,9 @@ public interface SolicitacaoRepository extends CrudRepository<Solicitacao, Long>
 	@Query(nativeQuery = true, value = "SELECT * FROM Solicitacao WHERE id_animal = :id_animal ORDER BY data_solicitacao DESC LIMIT 5")
 	public List<Solicitacao> findById_AnimalLimite(@Param("id_animal") Animal id_animal);
 
+	@Query(nativeQuery = true, value = "SELECT * FROM Solicitacao WHERE id_animal = :id_animal AND id_adotante = :id_adotante")
+	public Solicitacao findByIdAnimalAndIdAdotante(@Param("id_animal") Long id_animal, @Param("id_adotante") Long id_adotante);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM solicitacao WHERE id_animal IN (SELECT id_animal FROM animal WHERE id_doador = :id_doador AND id_tutor IS NULL)")
+	public List<Solicitacao> findByIdDoador(@Param("id_doador") Long id_doador);
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cidadeAcolhedora.CidadeAcolhedora.ResponseDefault.ResponseDefault;
@@ -32,7 +31,7 @@ public class UsuarioController {
 	
 	@PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Usuario loginUsuario(@RequestBody Map<String, String> userData) {
-		
+				
 		return userService.loginUsuario(userData.get("usuario"), userData.get("senha"));
 		
 	}
@@ -44,7 +43,7 @@ public class UsuarioController {
 		
 	}
 	
-	@RequestMapping("/{id_usuario}")
+	@RequestMapping("/id/{id_usuario}")
 	public Usuario findById(@PathVariable Long id_usuario) {
 		
 		return userService.findById(id_usuario);
@@ -58,6 +57,12 @@ public class UsuarioController {
 		
 		return userService.cadastraUsuario(usuario);
 		
+	}
+	
+	@PutMapping(path = "/atualizar/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario usuario) {
+		
+		return ResponseEntity.ok(userService.atualizarUsuario(usuario));
 	}
 	
 	// #### METODO DELETE ####

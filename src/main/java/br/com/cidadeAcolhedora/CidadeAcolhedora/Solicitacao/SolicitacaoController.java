@@ -3,7 +3,11 @@ package br.com.cidadeAcolhedora.CidadeAcolhedora.Solicitacao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +50,27 @@ public class SolicitacaoController {
 	public List<Solicitacao> findByIdAnimalLimite(@PathVariable Long id_animal) {
 		
 		return solicitacaoService.findByIdAnimalLimite(id_animal);
+		
+	}
+	
+	@RequestMapping("/doador/{id_doador}")
+	public ResponseEntity<List<Solicitacao>> findByIdDoador(@PathVariable Long id_doador) {
+		
+		return ResponseEntity.ok(solicitacaoService.findByIdDoador(id_doador));
+		
+	}
+	
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Solicitacao> cadastrarSolicitacao(@RequestBody Solicitacao solicitacao) {
+		
+		return ResponseEntity.ok(solicitacaoService.cadastrarSolicitacao(solicitacao));			
+		
+	}
+	
+	@PutMapping("/atualizar")
+	public ResponseEntity<Solicitacao> atualizarStatus(@RequestBody Solicitacao solicitacao) {
+		
+		return ResponseEntity.ok(solicitacaoService.alterarStatus(solicitacao));
 		
 	}
 }
